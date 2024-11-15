@@ -3,28 +3,48 @@ package transport
 import "github.com/tarm/serial"
 
 type SerialTransport struct {
-	Port *serial.Port
+	Config *serial.Config
+	port   *serial.Port
+	open   bool
 }
 
-func NewSerialTransport(config *serial.Config) (*SerialTransport, error) {
-	port, err := serial.OpenPort(config)
-	if err != nil {
-		return nil, err
-	}
-
+func NewSerialTransport(config *serial.Config) *SerialTransport {
 	return &SerialTransport{
-		Port: port,
-	}, nil
+		Config: config,
+		open:   false,
+	}
+}
+
+func (t *SerialTransport) Open() error {
+	port, err := serial.OpenPort(t.Config)
+	if err != nil {
+		return err
+	}
+	t.port = port
+	t.open = true
+	return nil
 }
 
 func (t *SerialTransport) Read(p []byte) (n int, err error) {
-	return t.Port.Read(p)
+	if !t.open {
+		return 0, ErrPortNotOpen
+	}
+	return t.port.Read(p)
 }
 
 func (t *SerialTransport) Write(p []byte) (n int, err error) {
-	return t.Port.Write(p)
+	if !t.open {
+		return 0, ErrPortNotOpen
+	}
+	return t.port.Write(p)
 }
 
 func (t *SerialTransport) Close() error {
-	return t.Port.Close()
+	err := t.port.Close()
+	if err != nil {
+		return err
+	}
+
+	t.open = false
+	return nil
 }
