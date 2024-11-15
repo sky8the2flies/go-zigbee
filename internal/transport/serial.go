@@ -8,7 +8,7 @@ type SerialTransport struct {
 	open   bool
 }
 
-func NewSerialTransport(config *serial.Config) *SerialTransport {
+func NewSerialPort(config *serial.Config) *SerialTransport {
 	return &SerialTransport{
 		Config: config,
 		open:   false,
