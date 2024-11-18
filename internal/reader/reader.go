@@ -3,18 +3,18 @@ package reader
 import (
 	"log/slog"
 
-	"go-zigbee-herdsman/internal/controller"
-	"go-zigbee-herdsman/pkg/pubsub"
+	"go-zigbee/internal/controller"
+	"go-zigbee/pkg/pubsub"
 )
 
 type Reader struct {
 	Parser      Parser
-	Agent       *pubsub.Agent
+	Agent       *pubsub.Agent[any]
 	errorSignal chan error
 	chunkSignal chan []byte
 }
 
-func NewReader(parser Parser, agent *pubsub.Agent) *Reader {
+func NewReader(parser Parser, agent *pubsub.Agent[any]) *Reader {
 	return &Reader{Parser: parser, Agent: agent}
 }
 

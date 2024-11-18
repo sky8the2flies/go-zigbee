@@ -1,4 +1,4 @@
-module go-zigbee-herdsman
+module go-zigbee
 
 go 1.23.3
 

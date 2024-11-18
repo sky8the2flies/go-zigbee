@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"go-zigbee-herdsman/internal/decoder"
-	"go-zigbee-herdsman/pkg/buffer"
+	"go-zigbee/internal/decoder"
+	"go-zigbee/pkg/buffer"
 	"log"
 	"log/slog"
 )

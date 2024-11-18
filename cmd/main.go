@@ -5,11 +5,11 @@ import (
 	"os"
 	"time"
 
-	"go-zigbee-herdsman/internal/controller"
-	"go-zigbee-herdsman/internal/parser"
-	"go-zigbee-herdsman/internal/reader"
-	"go-zigbee-herdsman/internal/transport"
-	"go-zigbee-herdsman/pkg/pubsub"
+	"go-zigbee/internal/controller"
+	"go-zigbee/internal/parser"
+	"go-zigbee/internal/reader"
+	"go-zigbee/internal/transport"
+	"go-zigbee/pkg/pubsub"
 
 	"github.com/golang-cz/devslog"
 	"github.com/tarm/serial"
@@ -32,7 +32,7 @@ func main() {
 		ReadTimeout: time.Second,
 	})
 
-	agent := pubsub.NewAgent()
+	agent := pubsub.NewAgent[any]()
 	parser := parser.NewParser()
 	reader := reader.NewReader(parser, agent)
 
