@@ -40,6 +40,9 @@ func (t *SerialTransport) Write(p []byte) (n int, err error) {
 }
 
 func (t *SerialTransport) Close() error {
+	if !t.open {
+		return nil
+	}
 	err := t.port.Close()
 	if err != nil {
 		return err
